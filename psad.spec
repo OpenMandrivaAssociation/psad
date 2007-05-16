@@ -1,6 +1,6 @@
 %define name psad
 %define version 2.0.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Psad analyzses iptables log messages for suspect traffic
 Name: %name
@@ -111,6 +111,7 @@ install -m 500 fwcheck_psad.pl $RPM_BUILD_ROOT%_sbindir/fwcheck_psad
 install -m 755 whois/whois $RPM_BUILD_ROOT/usr/bin/whois_psad
 install -m 755 init-scripts/psad-init.redhat $RPM_BUILD_ROOT%_initrddir/psad
 install -m 644 {psad.conf,kmsgsd.conf,psadwatchd.conf,fw_search.conf} $RPM_BUILD_ROOT%_sysconfdir/%name/
+install -m 644 {alert.conf,pf.os} $RPM_BUILD_ROOT%_sysconfdir/%name/
 install -m 644 {signatures,icmp_types,auto_dl,posf} $RPM_BUILD_ROOT%_sysconfdir/%name/
 install -m 644 *.8 $RPM_BUILD_ROOT%{_mandir}/man8/
 
@@ -191,6 +192,7 @@ fi
 %config(noreplace) %_sysconfdir/%name/icmp_types
 %config(noreplace) %_sysconfdir/%name/posf
 %config(noreplace) %_sysconfdir/%name/signatures
+%config(noreplace) %_sysconfdir/%name/pf.os
 
 %dir %_sysconfdir/%name/snort_rules
 %config(noreplace) %_sysconfdir/%name/snort_rules/*
