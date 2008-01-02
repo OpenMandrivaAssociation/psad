@@ -10,6 +10,7 @@ License: GPL
 Group: System/Servers
 Url: http://www.cipherdyne.org/psad/
 Source: http://www.cipherdyne.org/psad/download/%name-%version.tar.bz2
+BuildRoot: %_tmppath/%{name}-buildroot
 BuildRequires: perl-devel
 BuildRequires: perl-Unix-Syslog
 BuildRequires: perl-Net-IPv4Addr
