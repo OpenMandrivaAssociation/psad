@@ -91,7 +91,7 @@ popd
 ### log directory
 mkdir -p %{buildroot}%{_logdir}/%{name}
 ### dir for psadfifo
-mkdir -p %{buildroot}%{_localstatedir}/%{name}
+mkdir -p %{buildroot}%{_localstatedir}/lib/%{name}
 ### dir for pidfiles
 mkdir -p %{buildroot}/var/run/%{name}
 
@@ -168,7 +168,7 @@ fi
 %files
 %defattr(-,root,root)
 %{_logdir}/%{name}
-%{_localstatedir}/%{name}
+%{_localstatedir}/lib/%{name}
 /var/run/%{name}
 %{_sbindir}/*
 %{_bindir}/*
