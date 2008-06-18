@@ -1,7 +1,7 @@
 Summary:	Psad analyzses iptables log messages for suspect traffic
 Name:		psad
 Version:	2.1.1
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL+ and GPLv2+
 Group:		System/Servers
 URL:		http://www.cipherdyne.org/psad/
