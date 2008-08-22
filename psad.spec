@@ -1,7 +1,7 @@
 Summary:	Psad analyzses iptables log messages for suspect traffic
 Name:		psad
-Version:	2.1.1
-Release:	%mkrel 2
+Version:	2.1.4
+Release:	%mkrel 1
 License:	GPL+ and GPLv2+
 Group:		System/Servers
 URL:		http://www.cipherdyne.org/psad/
@@ -65,6 +65,8 @@ Psad package provides a IPTables-ChainMgr perl module.
 %build
 ### build psad binaries (kmsgsd, psadwatchd, and diskmond)
 %make OPTS="%{optflags}"
+
+pushd deps
 ### build the whois client
 %make OPTS="%{optflags}" -C whois
 
@@ -77,13 +79,14 @@ pushd IPTables-ChainMgr
 %__perl Makefile.PL INSTALLDIRS=vendor
 %__make
 popd
+popd
 
 %check
-pushd IPTables-Parse
+pushd deps/IPTables-Parse
 %__make test
 popd
 
-pushd IPTables-ChainMgr
+pushd deps/IPTables-ChainMgr
 PERL5LIB=../IPTables-Parse/blib/lib %__make test
 popd
 
@@ -106,22 +109,22 @@ mkdir -p %{buildroot}%{_initrddir}
 
 install -m 500 {psad,kmsgsd,psadwatchd}	%{buildroot}%{_sbindir}/
 install -m 500 fwcheck_psad.pl %{buildroot}%{_sbindir}/fwcheck_psad
-install -m 755 whois/whois %{buildroot}%{_bindir}/whois_%{name}
+install -m 755 deps/whois/whois %{buildroot}%{_bindir}/whois_%{name}
 install -m 755 init-scripts/psad-init.redhat %{buildroot}%{_initrddir}/%{name}
 install -m 644 {psad.conf,pf.os} %{buildroot}%{_sysconfdir}/%{name}/
 install -m 644 {signatures,icmp_types,auto_dl,posf,ip_options} %{buildroot}%{_sysconfdir}/%{name}/
 install -m 644 *.8 %{buildroot}%{_mandir}/man8/
 
-pushd IPTables-Parse
+pushd deps/IPTables-Parse
 %makeinstall_std
 popd
 
-pushd IPTables-ChainMgr
+pushd deps/IPTables-ChainMgr
 %makeinstall_std
 popd
 
 ### install snort rules files
-cp -r snort_rules %{buildroot}%{_sysconfdir}/%{name}/
+cp -r deps/snort_rules %{buildroot}%{_sysconfdir}/%{name}/
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
