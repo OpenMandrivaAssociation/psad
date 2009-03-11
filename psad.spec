@@ -1,13 +1,12 @@
 Summary:	Psad analyzses iptables log messages for suspect traffic
 Name:		psad
-Version:	2.1.4
+Version:	2.1.5
 Release:	%mkrel 1
 License:	GPL+ and GPLv2+
 Group:		System/Servers
 URL:		http://www.cipherdyne.org/psad/
-Source0:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.bz2
-Source1:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.bz2.asc
-BuildRoot:	%{_tmppath}/%{name}-buildroot
+Source0:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.gz
+Source1:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.gz.asc
 BuildRequires:	perl-devel
 BuildRequires:	perl-Unix-Syslog
 BuildRequires:	perl-Net-IPv4Addr
@@ -19,9 +18,9 @@ Requires:	perl-IPTables-Parse
 Requires:	userspace-ipfilter
 Requires:	perl-Bit-Vector
 Requires:	perl-IPTables-ChainMgr
-
-Requires(post):		rpm-helper
-Requires(preun):	rpm-helper
+Requires(post): rpm-helper
+Requires(preun): rpm-helper
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Port Scan Attack Detector (psad) is a collection of four lightweight
@@ -199,4 +198,3 @@ fi
 %defattr(-,root,root)
 %{perl_vendorlib}/IPTables/ChainMgr.pm
 %{_mandir}/man3/IPTables::ChainMgr*
-
