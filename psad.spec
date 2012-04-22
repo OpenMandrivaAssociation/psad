@@ -1,7 +1,7 @@
 Summary:	Psad analyzses iptables log messages for suspect traffic
 Name:		psad
-Version:	2.1.7
-Release:	%mkrel 2
+Version:	2.2
+Release:	1
 License:	GPL+ and GPLv2+
 Group:		System/Servers
 URL:		http://www.cipherdyne.org/psad/
@@ -9,18 +9,18 @@ Source0:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.gz
 Source1:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.gz.asc
 BuildRequires:	perl-devel
 BuildRequires:	perl-Unix-Syslog
-BuildRequires:	perl-Net-IPv4Addr
+BuildRequires:	perl-NetAddr-IP
 Requires:	perl-Unix-Syslog
 Requires:	perl-Date-Calc
 Requires:	sendmail-command
-Requires:	perl-Net-IPv4Addr
+Requires:	perl-NetAddr-IP
 Requires:	perl-IPTables-Parse
 Requires:	userspace-ipfilter
 Requires:	perl-Bit-Vector
 Requires:	perl-IPTables-ChainMgr
+Requires:	whois
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Port Scan Attack Detector (psad) is a collection of four lightweight
@@ -58,26 +58,21 @@ License:	GPL+ or Artistic
 Psad package provides a IPTables-ChainMgr perl module.
 
 %prep
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+
 %setup -q
 
 %build
 ### build psad binaries (kmsgsd, psadwatchd, and diskmond)
-%make OPTS="%{optflags}"
+%make OPTS="%{optflags}" LDFLAGS="%{ldflags}"
 
-pushd deps
-### build the whois client
-%make OPTS="%{optflags}" -C whois
-
-pushd IPTables-Parse
+pushd deps/IPTables-Parse
 %__perl Makefile.PL INSTALLDIRS=vendor
 %__make
 popd
 
-pushd IPTables-ChainMgr
+pushd deps/IPTables-ChainMgr
 %__perl Makefile.PL INSTALLDIRS=vendor
 %__make
-popd
 popd
 
 %check
@@ -97,8 +92,6 @@ mkdir -p %{buildroot}%{_localstatedir}/lib/%{name}
 ### dir for pidfiles
 mkdir -p %{buildroot}/var/run/%{name}
 
-### whois_psad binary
-mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_mandir}/man8
 mkdir -p %{buildroot}%{_sbindir}
 ### psad config
@@ -108,10 +101,9 @@ mkdir -p %{buildroot}%{_initrddir}
 
 install -m 500 {psad,kmsgsd,psadwatchd}	%{buildroot}%{_sbindir}/
 install -m 500 fwcheck_psad.pl %{buildroot}%{_sbindir}/fwcheck_psad
-install -m 755 deps/whois/whois %{buildroot}%{_bindir}/whois_%{name}
 install -m 755 init-scripts/psad-init.redhat %{buildroot}%{_initrddir}/%{name}
 install -m 644 {psad.conf,pf.os} %{buildroot}%{_sysconfdir}/%{name}/
-install -m 644 {signatures,icmp_types,auto_dl,posf,ip_options} %{buildroot}%{_sysconfdir}/%{name}/
+install -m 644 {signatures,icmp_types,icmp6_types,auto_dl,posf,ip_options} %{buildroot}%{_sysconfdir}/%{name}/
 install -m 644 *.8 %{buildroot}%{_mandir}/man8/
 
 pushd deps/IPTables-Parse
@@ -124,9 +116,6 @@ popd
 
 ### install snort rules files
 cp -r deps/snort_rules %{buildroot}%{_sysconfdir}/%{name}/
-
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %post
 ### put the current hostname into the psad C binaries
@@ -168,19 +157,18 @@ fi
 %_preun_service psad
 
 %files
-%defattr(-,root,root)
+%{_initrddir}/%{name}
 %{_logdir}/%{name}
 %{_localstatedir}/lib/%{name}
 /var/run/%{name}
 %{_sbindir}/*
-%{_bindir}/*
 %{_mandir}/man8/*
-%{_initrddir}/%{name}
 
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/*.conf
 %config(noreplace) %{_sysconfdir}/%{name}/auto_dl
 %config(noreplace) %{_sysconfdir}/%{name}/icmp_types
+%config(noreplace) %{_sysconfdir}/%{name}/icmp6_types
 %config(noreplace) %{_sysconfdir}/%{name}/posf
 %config(noreplace) %{_sysconfdir}/%{name}/signatures
 %config(noreplace) %{_sysconfdir}/%{name}/pf.os
@@ -190,11 +178,9 @@ fi
 %config(noreplace) %{_sysconfdir}/%{name}/snort_rules/*
 
 %files -n perl-IPTables-Parse
-%defattr(-,root,root)
 %{perl_vendorlib}/IPTables/Parse.pm
 %{_mandir}/man3/IPTables::Parse*
 
 %files -n perl-IPTables-ChainMgr
-%defattr(-,root,root)
 %{perl_vendorlib}/IPTables/ChainMgr.pm
 %{_mandir}/man3/IPTables::ChainMgr*
