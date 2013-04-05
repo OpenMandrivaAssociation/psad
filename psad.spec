@@ -1,7 +1,7 @@
 Summary:	Psad analyzses iptables log messages for suspect traffic
 Name:		psad
 Version:	2.2
-Release:	1
+Release:	2
 License:	GPL+ and GPLv2+
 Group:		System/Servers
 URL:		http://www.cipherdyne.org/psad/
@@ -21,6 +21,8 @@ Requires:	perl-IPTables-ChainMgr
 Requires:	whois
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
+
+%define debug_package %{nil}
 
 %description
 Port Scan Attack Detector (psad) is a collection of four lightweight
