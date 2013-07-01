@@ -1,4 +1,4 @@
-Summary:	Psad analyzses iptables log messages for suspect traffic
+Summary:	Analyzses iptables log messages for suspect traffic
 Name:		psad
 Version:	2.2
 Release:	2
