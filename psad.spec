@@ -1,28 +1,27 @@
+%define debug_package %{nil}
+
 Summary:	Analyzses iptables log messages for suspect traffic
 Name:		psad
 Version:	2.2
 Release:	3
-License:	GPL+ and GPLv2+
+License:	GPLv2+
 Group:		System/Servers
-URL:		http://www.cipherdyne.org/psad/
+Url:		http://www.cipherdyne.org/psad/
 Source0:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.gz
 Source1:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.gz.asc
 BuildRequires:	perl-devel
 BuildRequires:	perl-Unix-Syslog
 BuildRequires:	perl-NetAddr-IP
-Requires:	perl-Unix-Syslog
-Requires:	perl-Date-Calc
-Requires:	sendmail-command
-Requires:	perl-NetAddr-IP
-Requires:	perl-IPTables-Parse
-Requires:	userspace-ipfilter
 Requires:	perl-Bit-Vector
+Requires:	perl-Date-Calc
 Requires:	perl-IPTables-ChainMgr
+Requires:	perl-IPTables-Parse
+Requires:	perl-NetAddr-IP
+Requires:	perl-Unix-Syslog
+Requires:	sendmail-command
+Requires:	userspace-ipfilter
 Requires:	whois
-Requires(post): rpm-helper
-Requires(preun): rpm-helper
-
-%define debug_package %{nil}
+Requires(post,preun):	rpm-helper
 
 %description
 Port Scan Attack Detector (psad) is a collection of four lightweight
@@ -46,7 +45,7 @@ which scans originate.
 %package -n perl-IPTables-Parse
 Summary:	Parse iptables rules
 Group:		System/Configuration/Networking
-License:	GPL+ or Artistic
+License:	GPLv2+ or Artistic
 
 %description -n perl-IPTables-Parse
 Psad package provides a IPTables-Parse perl module.
@@ -54,13 +53,12 @@ Psad package provides a IPTables-Parse perl module.
 %package -n perl-IPTables-ChainMgr
 Summary:	ChainMgr iptables perl module
 Group:		System/Configuration/Networking
-License:	GPL+ or Artistic
+License:	GPLv2+ or Artistic
 
 %description -n perl-IPTables-ChainMgr
 Psad package provides a IPTables-ChainMgr perl module.
 
 %prep
-
 %setup -q
 
 %build
@@ -69,17 +67,17 @@ Psad package provides a IPTables-ChainMgr perl module.
 
 pushd deps/IPTables-Parse
 %__perl Makefile.PL INSTALLDIRS=vendor
-%__make
+%make
 popd
 
 pushd deps/IPTables-ChainMgr
 %__perl Makefile.PL INSTALLDIRS=vendor
-%__make
+%make
 popd
 
 %check
 pushd deps/IPTables-Parse
-%__make test
+%make test
 popd
 
 pushd deps/IPTables-ChainMgr
@@ -186,81 +184,4 @@ fi
 %files -n perl-IPTables-ChainMgr
 %{perl_vendorlib}/IPTables/ChainMgr.pm
 %{_mandir}/man3/IPTables::ChainMgr*
-
-
-%changelog
-* Sun Apr 22 2012 Oden Eriksson <oeriksson@mandriva.com> 2.2-1
-+ Revision: 792667
-- 2.2
-- don't bother with the bundled whois client
-- various fixes
-
-* Sun Jan 22 2012 Oden Eriksson <oeriksson@mandriva.com> 2.1.7-2
-+ Revision: 765952
-- rebuilt for perl-5.14.2
-
-* Fri May 13 2011 Leonardo Coelho <leonardoc@mandriva.org> 2.1.7-1
-+ Revision: 674320
-- version updated
-
-* Thu May 05 2011 Oden Eriksson <oeriksson@mandriva.com> 2.1.5-5
-+ Revision: 667893
-- mass rebuild
-
-* Sun Aug 01 2010 Funda Wang <fwang@mandriva.org> 2.1.5-4mdv2011.0
-+ Revision: 564727
-- rebuild
-
-* Mon Mar 15 2010 Oden Eriksson <oeriksson@mandriva.com> 2.1.5-3mdv2010.1
-+ Revision: 520204
-- rebuilt for 2010.1
-
-* Thu Sep 03 2009 Christophe Fergeau <cfergeau@mandriva.com> 2.1.5-2mdv2010.0
-+ Revision: 426785
-- rebuild
-
-* Wed Mar 11 2009 Oden Eriksson <oeriksson@mandriva.com> 2.1.5-1mdv2009.1
-+ Revision: 353770
-- 2.1.5
-
-* Fri Aug 22 2008 Frederik Himpe <fhimpe@mandriva.org> 2.1.4-1mdv2009.0
-+ Revision: 275211
-- Update to version 2.1.4, some files were moved to deps subdirectory
-
-* Wed Jun 18 2008 Thierry Vignaud <tv@mandriva.org> 2.1.1-2mdv2009.0
-+ Revision: 225084
-- rebuild
-
-  + Pixel <pixel@mandriva.com>
-    - adapt to %%_localstatedir now being /var instead of /var/lib (#22312)
-
-* Wed Feb 13 2008 Adam Williamson <awilliamson@mandriva.org> 2.1.1-1mdv2008.1
-+ Revision: 166923
-- rebuild for new era
-- install missing file ip_options and require perl-IPTables-ChainMgr (#37671)
-- new license policy, correct licenses
-- extensive spec clean
-- add the signature as Source1
-- new release 2.1.1:
-  	+ drop stuff that's been dropped upstream
-
-  + Olivier Blin <blino@mandriva.org>
-    - restore BuildRoot
-
-* Mon Dec 17 2007 Thierry Vignaud <tv@mandriva.org> 2mdv2008.1-current
-+ Revision: 125706
-- kill re-definition of %%buildroot on Pixel's request
-
-  + Lenny Cartier <lenny@mandriva.org>
-    - Include alert.conf and pf.os
-
-
-* Wed Dec 13 2006 Lenny Cartier <lenny@mandriva.com> 2.0.1-1mdv2007.0
-+ Revision: 96301
-- Update to 2.0.1
-
-* Fri Oct 20 2006 Lenny Cartier <lenny@mandriva.com> 1.4.8-1mdv2007.0
-+ Revision: 71307
-- Update to 1.4.8
-- Import psad
 
