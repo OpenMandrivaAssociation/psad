@@ -3,7 +3,7 @@
 Summary:	Analyzses iptables log messages for suspect traffic
 Name:		psad
 Version:	2.2
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://www.cipherdyne.org/psad/
