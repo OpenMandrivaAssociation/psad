@@ -1,2 +1,4 @@
+removed_sources:
+  psad-2.2.tar.gz: b88e3c08d8b35494d5a650ddd9b48d51a425aa62
 sources:
-  "psad-2.2.tar.gz": b88e3c08d8b35494d5a650ddd9b48d51a425aa62
+  psad-2.2.2.tar.bz2: 66a44f3188777c704921672e722bae2aa09326a8
