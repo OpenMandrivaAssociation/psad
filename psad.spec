@@ -2,12 +2,12 @@
 
 Summary:	Analyzses iptables log messages for suspect traffic
 Name:		psad
-Version:	2.2
-Release:	7
+Version:	2.2.2
+Release:	1
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://www.cipherdyne.org/psad/
-Source0:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.gz
+Source0:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.bz2
 Source1:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.gz.asc
 BuildRequires:	perl-devel
 BuildRequires:	perl-Unix-Syslog
@@ -184,4 +184,5 @@ fi
 %files -n perl-IPTables-ChainMgr
 %{perl_vendorlib}/IPTables/ChainMgr.pm
 %{_mandir}/man3/IPTables::ChainMgr*
+
 
