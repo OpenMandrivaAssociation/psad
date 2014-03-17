@@ -2,7 +2,7 @@
 
 Summary:	Analyzses iptables log messages for suspect traffic
 Name:		psad
-Version:	2.2.2
+Version:	2.2.3
 Release:	1
 License:	GPLv2+
 Group:		System/Servers
@@ -184,5 +184,6 @@ fi
 %files -n perl-IPTables-ChainMgr
 %{perl_vendorlib}/IPTables/ChainMgr.pm
 %{_mandir}/man3/IPTables::ChainMgr*
+
 
 
