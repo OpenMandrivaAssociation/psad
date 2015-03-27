@@ -2,8 +2,8 @@
 
 Summary:	Analyzses iptables log messages for suspect traffic
 Name:		psad
-Version:	2.2.3
-Release:	4
+Version:	2.4.0
+Release:	1
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://www.cipherdyne.org/psad/
@@ -66,12 +66,12 @@ Psad package provides a IPTables-ChainMgr perl module.
 %make OPTS="%{optflags}" LDFLAGS="%{ldflags}"
 
 pushd deps/IPTables-Parse
-%__perl Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make
 popd
 
 pushd deps/IPTables-ChainMgr
-%__perl Makefile.PL INSTALLDIRS=vendor
+perl Makefile.PL INSTALLDIRS=vendor
 %make
 popd
 
@@ -184,6 +184,3 @@ fi
 %files -n perl-IPTables-ChainMgr
 %{perl_vendorlib}/IPTables/ChainMgr.pm
 %{_mandir}/man3/IPTables::ChainMgr*
-
-
-
