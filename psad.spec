@@ -6,7 +6,7 @@ Version:	2.2.3
 Release:	7
 License:	GPLv2+
 Group:		System/Servers
-Url:		http://www.cipherdyne.org/psad/
+Url:		https://www.cipherdyne.org/psad/
 Source0:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.bz2
 Source1:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.gz.asc
 BuildRequires:	perl-devel
