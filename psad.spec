@@ -9,6 +9,7 @@ Group:		System/Servers
 Url:		https://www.cipherdyne.org/psad/
 Source0:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.bz2
 Source1:	http://www.cipherdyne.org/psad/download/%{name}-%{version}.tar.gz.asc
+BuildRequires:	make
 BuildRequires:	perl-devel
 BuildRequires:	perl-Unix-Syslog
 BuildRequires:	perl-NetAddr-IP
